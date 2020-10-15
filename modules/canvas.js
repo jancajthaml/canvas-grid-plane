@@ -11,11 +11,12 @@ class Canvas {
   #pixelRatio
   #resolution
   #viewport
-  #updating
   #children
   #resizeEvent
+  #dirty
 
   constructor(elemenId, children) {
+    this.dirty = false
     this.resizeEvent = null
     this.isDragging = null
     this.mousePosition = new Point(0, 0)
@@ -49,6 +50,7 @@ class Canvas {
 
     this.viewport.x += xDelta
     this.viewport.y += yDelta
+    this.dirty = true
   }
 
   onMouseDown(event) {
@@ -71,6 +73,7 @@ class Canvas {
         width: wrapper.clientWidth * this.pixelRatio,
         height: wrapper.clientHeight * this.pixelRatio,
       }
+      this.dirty = true
     }
   }
 
@@ -80,12 +83,9 @@ class Canvas {
   }
 
   update(currentTime) {
-    if (this.updating) {
+    if (!this.dirty) {
       return
     }
-
-    this.updating = true
-
     if (this.resizeEvent) {
       this.screen.canvas.width = this.buffer.canvas.width = this.resolution.width = this.resizeEvent.width
       this.screen.canvas.height = this.buffer.canvas.height = this.resolution.height = this.resizeEvent.height
@@ -100,7 +100,7 @@ class Canvas {
     this.children.forEach((child) => {
       child.render(this.viewport, this.buffer, currentTime)
     })
-    this.updating = false
+    this.dirty = false
     this.render()
   }
 
@@ -144,6 +144,7 @@ class Canvas {
     this.viewport.width = this.resolution.width / this.viewport.z
     this.viewport.y = (-zoomY * this.viewport.z + y) / this.viewport.z
     this.viewport.height = this.resolution.height / this.viewport.z
+    this.dirty = true
   }
 
 }

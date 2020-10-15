@@ -8,34 +8,37 @@ class Grid {
   }
 
   render(viewport, buffer) {
-    const x1 = -viewport.x
-    const y1 = -viewport.y
-    const width = buffer.canvas.width / viewport.z
-    const height = buffer.canvas.height / viewport.z
+    let x1 = -viewport.x
+    let y1 = -viewport.y
+    let width = buffer.canvas.width / viewport.z
+    let height = buffer.canvas.height / viewport.z
 
     buffer.fillStyle = "white"
     buffer.fillRect(x1, y1, width, height)
 
-    const xOffset = x1 % this.size
-    const yOffset = y1 % this.size
-
-    buffer.lineWidth = ((viewport.z / 3) + 0.2) / viewport.z
+    let x = 0.5 - (x1 % this.size)
+    let y = 0.5 - (y1 % this.size)
 
     buffer.beginPath()
-    let x = 0.5 -xOffset
-    let y = 0.5 -yOffset
 
+    width += x1
+    x += x1
     while (x < width) {
-      buffer.moveTo(x1 + x, y1)
-      buffer.lineTo(x1 + x, y1 + height)
+      buffer.moveTo(x, y1)
+      buffer.lineTo(x, y1 + height)
       x += this.size
     }
+
+    height += y1
+    x -= x1
+    y += y1
     while (y < height) {
-      buffer.moveTo(x1, y1 + y)
-      buffer.lineTo(x1 + width, y1 + y)
+      buffer.moveTo(x1, y)
+      buffer.lineTo(x1 + width, y)
       y += this.size
     }
 
+    buffer.lineWidth = ((viewport.z / 3) + 0.2) / viewport.z
     buffer.strokeStyle = "#777"
     buffer.stroke()
 

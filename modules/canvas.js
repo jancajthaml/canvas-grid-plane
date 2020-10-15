@@ -89,8 +89,8 @@ class Canvas {
     if (this.resizeEvent) {
       this.screen.canvas.width = this.buffer.canvas.width = this.resolution.width = this.resizeEvent.width
       this.screen.canvas.height = this.buffer.canvas.height = this.resolution.height = this.resizeEvent.height
-      this.viewport.width = this.resizeEvent.width / this.viewport.z // this.pixelRatio
-      this.viewport.height = this.resizeEvent.height / this.viewport.z // this.pixelRatio
+      this.viewport.width = this.resizeEvent.width / this.viewport.z
+      this.viewport.height = this.resizeEvent.height / this.viewport.z
       this.resizeEvent = null
     }
 
@@ -107,8 +107,8 @@ class Canvas {
   onWheel(event) {
     event.preventDefault()
     let nextScale = this.viewport.z
-    const MIN_ZOOM = 0.1
-    const MAX_ZOOM = 10
+    const MIN_ZOOM = 0.25
+    const MAX_ZOOM = 2.5
 
     if (Math.abs(event.deltaY) > 1000) {
       nextScale = event.deltaY > 0

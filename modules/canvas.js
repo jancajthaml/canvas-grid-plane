@@ -107,6 +107,8 @@ class Canvas {
   onWheel(event) {
     event.preventDefault()
     let nextScale = this.viewport.z
+    const MIN_ZOOM = 0.1
+    const MAX_ZOOM = 10
 
     if (Math.abs(event.deltaY) > 1000) {
       nextScale = event.deltaY > 0
@@ -125,6 +127,8 @@ class Canvas {
         ? this.viewport.z * Math.pow(1.03, 1)
         : this.viewport.z / Math.pow(1.03, 1)
     }
+
+    nextScale = Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, nextScale))
 
     if (nextScale === this.viewport.z) {
       return

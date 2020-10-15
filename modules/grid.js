@@ -39,14 +39,13 @@ class Grid {
     buffer.strokeStyle = "#777"
     buffer.stroke()
 
-    buffer.fillStyle = "red"
-    buffer.fillRect(10, 10, this.size, this.size)
+    for (let i = 0 ; i < 200 ; i+= 1) {
+      for (let j = 0 ; j < 200 ; j+= 1) {
+        buffer.fillStyle = "red"
+        buffer.fillRect(1+40*i, 1+40*j, this.size-1, this.size-1)
+      }
+    }
 
-    buffer.fillStyle = "red"
-    buffer.fillRect(50, 10, this.size, this.size)
-
-    buffer.fillStyle = "red"
-    buffer.fillRect(10, 50, this.size, this.size)
   }
 
 }

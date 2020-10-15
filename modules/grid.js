@@ -30,7 +30,7 @@ class Grid {
     }
 
     height += y1
-    x -= x1
+    width -= x1
     y += y1
     while (y < height) {
       buffer.moveTo(x1, y)
